@@ -11,6 +11,7 @@ import (
 // Message represents an email.
 type Message struct {
 	header      header
+	rawBody     string
 	parts       []*part
 	attachments []*file
 	embedded    []*file
@@ -180,6 +181,10 @@ func (m *Message) FormatDate(date time.Time) string {
 // GetHeader gets a header field.
 func (m *Message) GetHeader(field string) []string {
 	return m.header[field]
+}
+
+func (m *Message) SetRawBody(body string) {
+	m.rawBody = body
 }
 
 // SetBody sets the body of the message. It replaces any content previously set

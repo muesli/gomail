@@ -38,8 +38,13 @@ func (w *messageWriter) writeMessage(m *Message) {
 	if m.hasAlternativePart() {
 		w.openMultipart("alternative")
 	}
-	for _, part := range m.parts {
-		w.writePart(part, m.charset)
+
+	if len(m.rawBody) > 0 {
+		w.writeString(m.rawBody)
+	} else {
+		for _, part := range m.parts {
+			w.writePart(part, m.charset)
+		}
 	}
 	if m.hasAlternativePart() {
 		w.closeMultipart()
